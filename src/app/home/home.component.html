@@ -1,0 +1,63 @@
+<div class="text-left mb-2">
+    <input [(ngModel)]="searchText"
+           class="form-control rounded bg-white"
+           placeholder="Search..."
+           type="text"/>
+    <button class="btn btn-info mr-2" (click)="search()">
+      Search
+    </button>
+</div>
+
+<div *ngIf="rows.length>0">
+  <ngx-datatable
+    class="material"
+    [rows]="rows"
+    [columnMode]="ColumnMode.force"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    rowHeight="auto"
+    [externalPaging]="true"
+    [count]="page.totalElements"
+    [offset]="page.pageNumber"
+    [limit]="page.size"
+    (page)="setPage($event)">
+
+    <ngx-datatable-column name="Name" prop="name" [flexGrow]="1"
+                          [minWidth]="100">
+      <ng-template let-column="column" ngx-datatable-header-template>
+        <div>{{ column.name }}</div>
+      </ng-template>
+
+      <ng-template let-row="column" let-value="value" ngx-datatable-cell-template>
+        <div>{{ value }}</div>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Photo" prop="photo"
+                          [flexGrow]="1" [minWidth]="100">
+      <ng-template let-column="column" ngx-datatable-header-template>
+        <div>{{ column.name }}</div>
+      </ng-template>
+
+      <ng-template let-row="column" let-value="value" ngx-datatable-cell-template>
+        <img src="{{value}}" class="img-fluid" alt="Responsive image">
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Edit">
+      <ng-template let-column="column" ngx-datatable-header-template>
+        <span class="mobile-hidden">{{column.name}}</span>
+      </ng-template>
+
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <a [routerLink]="['/cities', row.id]" [state]="{ city: row }" class="success p-0" data-original-title=""
+           title="">
+          edit
+        </a>
+      </ng-template>
+    </ngx-datatable-column>
+
+  </ngx-datatable>
+
+
+</div>
